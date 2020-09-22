@@ -31,8 +31,12 @@ Describe $global:TestLocalizedData.Module.Describe {
 
 Describe $global:TestLocalizedData.DllPath.Describe {
     BeforeAll {
-        Find-Module SqlServer | Install-Module -Scope CurrentUser -Force
-        $SqlServerModule = Get-Module SqlServer -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
+        $SqlServerModule = $SqlServerModule = Get-Module SqlServer -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
+        if (!$SqlServerModule)
+        {
+            Find-Module SqlServer | Install-Module -Scope CurrentUser -Force
+            $SqlServerModule = $SqlServerModule = Get-Module SqlServer -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
+        }
         $DacDllPath = Join-Path $SqlServerModule.ModuleBase "Microsoft.SqlServer.Dac.dll"
     }
 
