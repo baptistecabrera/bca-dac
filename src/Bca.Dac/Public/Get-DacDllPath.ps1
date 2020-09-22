@@ -25,12 +25,12 @@ function Get-DacDllPath
     Write-Debug ($script:LocalizedData.Global.Debug.Entering -f $PSCmdlet.MyInvocation.MyCommand)
     if (!$script:DacDllPath)
     {
-        Write-Verbose $script:LocalizedData.SetDacDllPath.Verbose.FromModule
+        Write-Verbose $script:LocalizedData.GetDacDllPath.Verbose.FromModule
         $SqlServerModule = Get-Module SqlServer -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
         if ($SqlServerModule)
         {
             $DacDllPath = Join-Path $SqlServerModule.ModuleBase "Microsoft.SqlServer.Dac.dll"
-            if (Test-Path $DacDllPath) { $script:DacDllPath = $DacDllPath }
+            if (Test-Path $DacDllPath) { Set-DacDllPath -Path $DacDllPath }
         }
     }
     $script:DacDllPath

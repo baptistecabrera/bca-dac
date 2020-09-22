@@ -63,6 +63,30 @@ Describe $global:TestLocalizedData.DllPath.Describe {
         $DllPath | Should -BeExactly $DacDllPath
     }
 
+    It $global:TestLocalizedData.DllPath.SetDllFullPath {
+        try
+        {
+            Set-DacDllPath -Path (Join-Path ([System.IO.Path]::GetTempPath()) "Microsoft.SqlServer.Dac.dll")
+            $DllPath = Get-DacDllPath
+            $Result = $true
+        }
+        catch { $Result = $false }
+        $Result | Should -Be $false
+        $DllPath | Should -BeExactly $DacDllPath
+    }
+
+    It $global:TestLocalizedData.DllPath.SetDllFullPath {
+        try
+        {
+            Set-DacDllPath -Path (Join-Path ([System.IO.Path]::GetTempPath()) "Microsoft.SqlServer.Dac.notdll")
+            $DllPath = Get-DacDllPath
+            $Result = $true
+        }
+        catch { $Result = $false }
+        $Result | Should -Be $false
+        $DllPath | Should -BeExactly $DacDllPath
+    }
+
     It $global:TestLocalizedData.DllPath.SetDllDirectory {
         try
         {
@@ -72,6 +96,18 @@ Describe $global:TestLocalizedData.DllPath.Describe {
         }
         catch { $Result = $false }
         $Result | Should -Be $true
+        $DllPath | Should -BeExactly $DacDllPath
+    }
+
+    It $global:TestLocalizedData.DllPath.SetDllDirectory {
+        try
+        {
+            Set-DacDllPath -Path ([System.IO.Path]::GetTempPath())
+            $DllPath = Get-DacDllPath
+            $Result = $true
+        }
+        catch { $Result = $false }
+        $Result | Should -Be $false
         $DllPath | Should -BeExactly $DacDllPath
     }
 }
