@@ -57,7 +57,7 @@ _Please not that to date I am the only developper for this module._
 - If the CI succeeds and the packages are well pushed, the CD is triggered.
 
 ### CI
-[![Build Status](https://dev.azure.com/baptistecabrera/Bca/_apis/build/status/Build/Bca.Dac?repoName=bca-dac&branchName=master)](https://dev.azure.com/baptistecabrera/Bca/_build/latest?definitionId=20&repoName=bca-dac&branchName=master)
+[![Build Status](https://dev.azure.com/baptistecabrera/Bca/_apis/build/status/Build/Bca.Dac?repoName=bca-dac&branchName=master)](https://dev.azure.com/baptistecabrera/Bca/_build/latest?definitionId=27&repoName=bca-dac&branchName=master)
 
 [![Azure DevOps tests (branch)](https://img.shields.io/azure-devops/tests/baptistecabrera/Bca/27/master?logo=azure-pipelines&logoColor=white)](https://dev.azure.com/baptistecabrera/Bca/_build/latest?definitionId=27&repoName=bca-test&branchName=master) [![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/baptistecabrera/Bca/27/master?logo=azure-pipelines&logoColor=white)](https://dev.azure.com/baptistecabrera/Bca/_build/latest?definitionId=27&repoName=bca-test&branchName=master)
 

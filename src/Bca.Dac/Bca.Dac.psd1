@@ -23,7 +23,7 @@
     Copyright         = '(c) 2020 Bca. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description       = 'Module to manage DAC packages and SQL Projects.'
+    Description       = 'PowerShell Module to manage DAC packages and SQL Projects.'
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '5.1'
@@ -85,18 +85,17 @@
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
     PrivateData       = @{
 
+        License          = "MIT"
+
+        repositoryUrl    = "https://github.com/baptistecabrera/bca-dac.git"
+
+        docsUrl          = "https://github.com/baptistecabrera/bca-dac/tree/master/doc"
+        mailingListUrl   = "https://github.com/baptistecabrera/bca-dac/issues"
+        bugTrackerUrl    = "https://github.com/baptistecabrera/bca-dac/issues"
+        packageSourceUrl = "https://github.com/baptistecabrera/bca-dac/tree/master/src"
+        projectSourceUrl = "https://github.com/baptistecabrera/bca-dac/tree/master/src"
+        
         PSData = @{
-
-            License          = "MIT"
-
-            repositoryUrl    = "https://github.com/baptistecabrera/bca-dac.git"
-
-            docsUrl          = "https://github.com/baptistecabrera/bca-dac/tree/master/doc"
-            mailingListUrl   = "https://github.com/baptistecabrera/bca-dac/issues"
-            bugTrackerUrl    = "https://github.com/baptistecabrera/bca-dac/issues"
-            packageSourceUrl = "https://github.com/baptistecabrera/bca-dac/tree/master/src"
-            projectSourceUrl = "https://github.com/baptistecabrera/bca-dac/tree/master/src"
-
             # Tags applied to this module. These help with module discovery in online galleries.
             Tags             = @('dac', 'dacpac', 'sqlproj', 'dacpackage', 'sqlproject', "Windows", "Linux", "MacOS")
 
