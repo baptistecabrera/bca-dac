@@ -9,7 +9,7 @@ Publishes a DAC package.
 Publishes a DAC package.
 ## Syntax
 ```powershell
-Publish-DacPac [-Path] <string> [-DacProfilePath] <string> [[-DeployOptions] <hashtable>] [[-OutputPath] <string>] [[-DacDllPath] <string>] [-GenerateDriftReport] [-GenerateDeployReport] [-GenerateDeployScript] [-KillSessions] [<CommonParameters>]
+Publish-DacPac [-Path] <string> [-DacProfilePath] <string> [[-DeployOptions] <hashtable>] [[-OutputPath] <string>] [[-DacDllPath] <string>] [-GenerateDriftReport] [-GenerateDeployReport] [-GenerateDeployScript] [-KillSessions] [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 ## Examples
 ### Example 1
@@ -112,6 +112,17 @@ A string containing the path to the DAC DLL.
 
 ### `-KillSessions`
 A switch specifying whether or not to terminate active session on the database if it exists.
+
+| | |
+|:-|:-|
+|Type:|SwitchParameter|
+|Default value:|False|
+|Position:|Named|
+|Required:|False|
+|Accepts pipepline input:|False|
+
+### `-Force`
+A switch specifying whether or not to force the execution (will implicitely enable option KillSessions).
 
 | | |
 |:-|:-|
