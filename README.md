@@ -20,6 +20,18 @@ It can be used to deploy and undeploy DACPAC.
 - Although it is not a dependency, `Invoke-SqlCmd` (from either [SqlServer](https://docs.microsoft.com/en-us/powershell/module/sqlserver/?view=sqlserver-ps) or [SQLPS](https://docs.microsoft.com/en-us/powershell/module/sqlps/?view=sqlserver-ps) PowerShell module) is used to determine if target database exists.
 - `Microsoft.SqlServer.Dac.dll` is required, and if [SqlServer](https://docs.microsoft.com/en-us/powershell/module/sqlserver/?view=sqlserver-ps) PowerShell module is installed, it will be dynamically discovered from it ; else you will have to specify its path with `Set-DacDllPath` before deploying or undeploying DACPAC.
 
+## Documentation
+Find extended documentation [at this page](doc/ReadMe.md).
+
+## How to install
+
+### The easiest way
+
+In a PowerShell console, run the following:
+```powershell
+Find-Module -Name Bca.Dac | Install-Module
+```
+
 ### Package
 
 _Bca.Dac_ is available as a package from _[PowerShell Gallery](https://www.powershellgallery.com/)_, _[NuGet](https://www.nuget.org/)_ and _[Chocolatey](https://chocolatey.org/)_*, please refer to each specific plateform on how to install the package.
