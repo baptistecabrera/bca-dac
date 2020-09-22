@@ -38,6 +38,7 @@ Describe $global:TestLocalizedData.DllPath.Describe {
             $SqlServerModule = $SqlServerModule = Get-Module SqlServer -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
         }
         $DacDllPath = Join-Path $SqlServerModule.ModuleBase "Microsoft.SqlServer.Dac.dll"
+        $NotDacDllPath = Join-Path ([System.IO.Path]::GetTempPath()) "Microsoft.SqlServer.Dac.notdll"
     }
 
     It $global:TestLocalizedData.DllPath.GetDllModule {
@@ -82,7 +83,8 @@ Describe $global:TestLocalizedData.DllPath.Describe {
     It $global:TestLocalizedData.DllPath.SetDllFullPath {
         try
         {
-            Set-DacDllPath -Path (Join-Path ([System.IO.Path]::GetTempPath()) "Microsoft.SqlServer.Dac.notdll") -ErrorAction Stop
+            New-Item -Path $NotDacDllPath -ItemType File -Force | Out-Null
+            Set-DacDllPath -Path $NotDacDllPath -ErrorAction Stop
             $DllPath = Get-DacDllPath
             $Result = $true
         }

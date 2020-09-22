@@ -23,6 +23,8 @@ function Publish-DacPac
             A string containing the path to the DAC DLL.
         .PARAMETER KillSessions
             A switch specifying whether or not to terminate active session on the database if it exists.
+        .PARAMETER Force
+            A switch specifying whether or not to force the execution (will implicitely enable option KillSessions).
         .EXAMPLE
             Publish-DacPac -Path C:\MyProject\MyProject.dacpac -DacProfilePath C:\MyProject\MyProject.publish.xml
 
@@ -32,7 +34,7 @@ function Publish-DacPac
         .LINK
             Unpublish-DacPac
     #>
-    [CmdLetBinding()]
+    [CmdLetBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     param(
         [parameter(Mandatory = $true)]
         [ValidateScript( { Test-Path $_ } )]
@@ -58,7 +60,9 @@ function Publish-DacPac
         [ValidateScript( { Test-Path $_ } )]
         [string] $DacDllPath = (Get-DacDllPath),
         [parameter(Mandatory = $false)]
-        [switch] $KillSessions
+        [switch] $KillSessions,
+        [Parameter(Mandatory = $false)]
+        [switch] $Force
     )
 
     try
@@ -129,7 +133,7 @@ function Publish-DacPac
         }
 
         Write-Verbose ($script:LocalizedData.PublishUnpublishDacPac.Verbose.DeployDacPac -f $DacPac.Name)
-        $DacService.Deploy($DacPac, $DacProfile.TargetDatabaseName, $true, $DacProfile.DeployOptions)
+        if ($Force -or $PSCmdlet.ShouldProcess($DacProfile.TargetDatabaseName)) { $DacService.Deploy($DacPac, $DacProfile.TargetDatabaseName, $true, $DacProfile.DeployOptions) }
     }
     catch
     {

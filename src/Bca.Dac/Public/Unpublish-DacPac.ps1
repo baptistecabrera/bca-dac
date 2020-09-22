@@ -17,6 +17,8 @@ function Unpublish-DacPac
             A string containing the path to the DAC DLL.
         .PARAMETER KillSessions
             A switch specifying whether or not to terminate active session on the database if it exists.
+        .PARAMETER Force
+            A switch specifying whether or not to force the execution (will implicitely enable option KillSessions).
         .EXAMPLE
             Unpublish-DacPac -Path C:\MyProject\MyProject.dacpac -DacProfilePath C:\MyProject\MyProject.publish.xml
 
@@ -26,7 +28,7 @@ function Unpublish-DacPac
         .LINK
             Publish-DacPac
     #>
-    [CmdLetBinding()]
+    [CmdLetBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     param(
         [parameter(Mandatory = $true)]
         [ValidateScript( { Test-Path $_ } )]
@@ -42,7 +44,9 @@ function Unpublish-DacPac
         [ValidateScript( { Test-Path $_ } )]
         [string] $DacDllPath = (Get-DacDllPath),
         [parameter(Mandatory = $false)]
-        [switch] $KillSessions
+        [switch] $KillSessions,
+        [Parameter(Mandatory = $false)]
+        [switch] $Force
     )
 
     try
@@ -83,11 +87,14 @@ function Unpublish-DacPac
             }
 
             Write-Verbose ($script:LocalizedData.PublishUnpublishDacPac.Verbose.UnregisterDac -f $DacPac.Name, $Mode)
-            $DacService.Unregister($DacProfile.TargetDatabaseName)
-            switch ($Mode)
-            {
-                "DetachDatabase" { Invoke-Sqlcmd -ConnectionString $DacProfile.TargetConnectionString -Query "EXEC sp_detach_db $($DacProfile.TargetDatabaseName);" | Out-Null }
-                "DropDatabase" { Invoke-Sqlcmd -ConnectionString $DacProfile.TargetConnectionString -Query "DROP DATABASE $($DacProfile.TargetDatabaseName);" | Out-Null }
+            if ($Force -or $PSCmdlet.ShouldProcess($DacProfile.TargetDatabaseName))
+            { 
+                $DacService.Unregister($DacProfile.TargetDatabaseName)
+                switch ($Mode)
+                {
+                    "DetachDatabase" { Invoke-Sqlcmd -ConnectionString $DacProfile.TargetConnectionString -Query "EXEC sp_detach_db $($DacProfile.TargetDatabaseName);" | Out-Null }
+                    "DropDatabase" { Invoke-Sqlcmd -ConnectionString $DacProfile.TargetConnectionString -Query "DROP DATABASE $($DacProfile.TargetDatabaseName);" | Out-Null }
+                }
             }
         }
         else { Write-Warning ($script:LocalizedData.PublishUnpublishDacPac.Warning.DbDoesntExist -f $DacProfile.TargetDatabaseName) }
