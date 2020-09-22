@@ -5,10 +5,18 @@ if (Test-Path (Join-Path $PSScriptRoot LocalizedData))
 }
 
 Describe $global:TestLocalizedData.Module.Describe {
+    BeforeAll {
+        $ParentDirectory = Split-Path $PSScriptRoot -Parent
+        $Directory = Split-Path $PSScriptRoot -Leaf
+
+        if ([version]::TryParse($Directory, [ref]$null)) { $ModuleName = Split-Path $ParentDirectory -Leaf }
+        else { $ModuleName = $Directory }
+    }
+
     It $global:TestLocalizedData.Module.ImportModule {
         try
         {
-            Import-Module (Join-Path $PSScriptRoot Bca.Dac.psd1) -Force
+            Import-Module (Join-Path $PSScriptRoot ("{0}.psd1" -f $ModuleName)) -Force
             $Result = $true
         }
         catch { $Result = $false }
@@ -16,7 +24,7 @@ Describe $global:TestLocalizedData.Module.Describe {
     }
     
     It $global:TestLocalizedData.Module.CommandCheck {
-        $Commands = Get-Command -Module Bca.Jwt
+        $Commands = Get-Command -Module $ModuleName
         $Commands.Count | Should -BeGreaterThan 0
     }
 }
