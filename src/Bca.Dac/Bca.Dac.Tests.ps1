@@ -66,11 +66,15 @@ Describe $global:TestLocalizedData.DllPath.Describe {
     It $global:TestLocalizedData.DllPath.SetDllFullPath {
         try
         {
-            Set-DacDllPath -Path (Join-Path ([System.IO.Path]::GetTempPath()) "Microsoft.SqlServer.Dac.dll")
+            Set-DacDllPath -Path (Join-Path ([System.IO.Path]::GetTempPath()) "Microsoft.SqlServer.Dac.dll") -ErrorAction Stop
             $DllPath = Get-DacDllPath
             $Result = $true
         }
-        catch { $Result = $false }
+        catch
+        {
+            $DllPath = Get-DacDllPath
+            $Result = $false
+        }
         $Result | Should -Be $false
         $DllPath | Should -BeExactly $DacDllPath
     }
@@ -78,11 +82,15 @@ Describe $global:TestLocalizedData.DllPath.Describe {
     It $global:TestLocalizedData.DllPath.SetDllFullPath {
         try
         {
-            Set-DacDllPath -Path (Join-Path ([System.IO.Path]::GetTempPath()) "Microsoft.SqlServer.Dac.notdll")
+            Set-DacDllPath -Path (Join-Path ([System.IO.Path]::GetTempPath()) "Microsoft.SqlServer.Dac.notdll") -ErrorAction Stop
             $DllPath = Get-DacDllPath
             $Result = $true
         }
-        catch { $Result = $false }
+        catch
+        {
+            $DllPath = Get-DacDllPath
+            $Result = $false
+        }
         $Result | Should -Be $false
         $DllPath | Should -BeExactly $DacDllPath
     }
@@ -102,11 +110,15 @@ Describe $global:TestLocalizedData.DllPath.Describe {
     It $global:TestLocalizedData.DllPath.SetDllDirectory {
         try
         {
-            Set-DacDllPath -Path ([System.IO.Path]::GetTempPath())
+            Set-DacDllPath -Path ([System.IO.Path]::GetTempPath()) -ErrorAction Stop
             $DllPath = Get-DacDllPath
             $Result = $true
         }
-        catch { $Result = $false }
+        catch
+        {
+            $DllPath = Get-DacDllPath
+            $Result = $false
+        }
         $Result | Should -Be $false
         $DllPath | Should -BeExactly $DacDllPath
     }
